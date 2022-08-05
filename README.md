@@ -1,1 +1,3 @@
-# Kesh
+Paint Application
+
+    GUI using Tkinter
