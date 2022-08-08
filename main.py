@@ -1,3 +1,4 @@
+from sqlite3 import Cursor
 from tkinter import *
 from tkinter.colorchooser import askcolor
 from tkinter import ttk
@@ -12,10 +13,7 @@ root.resizable(False,False)
 #root.wm_attributes('-topmost', True)
 #root.wm_attributes('-transparentcolor','#add123')
 
-undo_stack = []
-redo_stack = []
 pen_on=False
-stk = []
 current_x = 0
 current_y = 0
 color = 'black'
@@ -24,8 +22,10 @@ def switch_pen():
     global pen_on
     if pen_on==True:
         pen_on=False
+        root.config(cursor="")
     else:
         pen_on=True
+        root.config(cursor="pencil")
 
 def locate_xy(work):
     global current_x, current_y
@@ -34,16 +34,10 @@ def locate_xy(work):
     current_y = work.y
 
 def addLine(work):
-    global pen_on
-    canvas.delete('temp_line_objects')
-    global current_x, current_y, stack
+    global current_x, current_y, pen_on
     if pen_on:
-
         var = canvas.create_line((current_x,current_y,work.x,work.y),width=get_current_value(),fill=color,capstyle=ROUND,smooth=TRUE)
-        stk.append((current_x,current_y,work.x,work.y,get_current_value(),color))
         current_x,current_y = work.x,work.y
-        #undo_stack.append(var)
-
 
 def show_color(new_color):
     global color
@@ -53,37 +47,9 @@ def new_canvas():
     canvas.delete('all')
     display_palette
 
-
-'''def undo():
-    global undo_stack, redo_stack, stk
-    l=10
-    while undo_stack and l>0:
-        var = undo_stack.pop()
-        canvas.delete(var)
-
-        info = stk.pop()
-        redo_stack.append(info)
-
-        l=l-1
-    display_palette'''
-
-'''def redo():
-    global undo_stack, redo_stack
-    l=10
-    while redo_stack and l>0:
-        info = redo_stack.pop()
-        var = canvas.create_line((info[0],info[1],info[2],info[3]),width=info[4],fill=info[5],capstyle=ROUND,smooth=True)
-
-        undo_stack.append(var)
-        stk.append(info)
-        l=l-1
-    display_palette '''
-
 #icon
 image_icon=PhotoImage(file="./icons/paintbrush.png")
 root.iconphoto(False,image_icon)
-
-
 
 color_box=PhotoImage(file="./icons/color section.png")
 Label(root,image=color_box,bg="#f2f3f5").place(x=7,y=17)
@@ -97,16 +63,12 @@ Button(root,image=pen_icon,bg="#f2f3f5",command=switch_pen).place(x=33,y=110)
 eraser=PhotoImage(file="./icons/eraser.png")
 Button(root,image=eraser,bg="#f2f3f5",command=new_canvas).place(x=33,y=470)
 
-#undoButton = PhotoImage(file="./icons/undo.png")
-#Button(root,image=undoButton,bg="#f2f3f5",command=undo).place(x=30,y=450)
-
-#redoButton = PhotoImage(file="./icons/redo.png")
-#Button(root,image=redoButton,bg="#f2f3f5",command=redo).place(x=30,y=500)
-
-canvas= Canvas(root,width=930,height=540,background="white",cursor="hand2")
+canvas= Canvas(root,width=930,height=540,background="white")
 canvas.place(x=100,y=10)
+
 colors=Canvas(root,bg="#ffffff",width=37,height=310,bd=0)
 colors.place(x=30,y=150)
+
 
 def display_palette():
     id=colors.create_rectangle((10,10,30,30),fill="black")
