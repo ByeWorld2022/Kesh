@@ -8,6 +8,7 @@ import pyautogui
 
 root = Tk()
 root.title("White Board")
+root.overrideredirect(True)
 root.geometry("80x410+150+50")
 root.configure(bg="#f2f3f5")
 root.resizable(False,False)
@@ -36,7 +37,7 @@ def zoomify():
     pass
 
 def clearall():
-    pass
+    root.destroy()
 
 def locate_xy(work):
     global current_x, current_y
