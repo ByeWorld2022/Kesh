@@ -5,6 +5,7 @@ from tkinter import ttk
 import tkinter as tk
 from turtle import color
 import pyautogui
+import os
 
 root = Tk()
 root.title("White Board")
@@ -21,14 +22,11 @@ current_x = 0
 current_y = 0
 color = 'black'
 
-def switch_pen():
+def annotate():
     global pen_on
-    if pen_on==True:
-        pen_on=False
-        root.config(cursor="")
-    else:
-        pen_on=True
-        root.config(cursor="pencil")
+    if pen_on==False:
+
+        os.system("cmd /k screenpen")
 
 def magnify():
     pass
@@ -62,7 +60,7 @@ zoom_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//ic
 Button(root,image=zoom_icon,bg="#f2f3f5",command=zoomify).place(x=20,y=80)
 
 pen_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/pen1.png")
-Button(root,image=pen_icon,bg="#f2f3f5",command=switch_pen).place(x=20,y=120)
+Button(root,image=pen_icon,bg="#f2f3f5",command=annotate).place(x=20,y=120)
 
 destroy=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/destroy.png")
 Button(root,image=destroy,bg="#f2f3f5",command=clearall).place(x=20,y=360)
