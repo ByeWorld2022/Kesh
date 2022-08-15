@@ -1,10 +1,11 @@
 from tkinter import *
 from tkinter import messagebox
-from unicodedata import name
+from simple_facerec import SimpleFacerec
 from mss import mss
 import os
 import shutil
 import cv2
+
 
 def validIPAddress(IP):
     def isIPv4(s):
@@ -69,13 +70,14 @@ class MainWindow():
         else:
             self.root.destroy()  
             loginWindow = Tk() 
-            obj = LoginWindow(loginWindow,"Face Recognition", "1166x718")   
+            obj = LoginWindow(loginWindow,"Face Recognition", "1166x718",IP)   
             loginWindow.mainloop()
 
 
 class LoginWindow():
 
-    def __init__(self, root, title, size):
+    def __init__(self, root, title, size,IP):
+        self.ip = IP
         self.root = root
         self.title = title
         self.size = size
@@ -96,17 +98,52 @@ class LoginWindow():
 
 
     def login(self):
-        pass
+        #cap = cv2.VideoCapture('rtsp://{}/1'.format(self.ip))
+        cap=cv2.VideoCapture(0)
+        #take all pics from admins
+        sfr=SimpleFacerec()
+        sfr.load_encoding_images("./Admin")
+
+        while True:
+            ret,frame = cap.read()
+            
+            #detect face
+            face_locations,face_names=sfr.detect_known_faces(frame)
+            for loc,name in zip(face_locations,face_names):
+                y1,x1,y2,x2=loc[0],loc[1],loc[2],loc[3]
+                cv2.putText(frame,name,(x1,y1-10),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
+                cv2.rectangle(frame,(x1,y1),(x2,y2),(0,0,200),2)
+
+            cv2.imshow("Auth",frame)
+            key=cv2.waitKey(1)
+
+
+            if key==27:
+                break
+        cap.release()
+        cv2.destroyAllWindows()
+
+        for name in face_names:
+            if name != "Unknown":
+                messagebox.showinfo("INFO","Successfully logged in!")
+                return
+        messagebox.showwarning("Warning","Invalid User!")
+        self.root.destroy() 
+        mainWindow = Tk()
+        mainFenster = MainWindow(mainWindow, "Face Recognition", "1166x718")
+        mainWindow.mainloop()
+
 
     def register(self):
         self.root.destroy() 
         regWindow = Tk() 
-        obj = RegWindow(regWindow,"Face Recognition", "1166x718") 
+        obj = RegWindow(regWindow,"Face Recognition", "1166x718",self.ip) 
         regWindow.mainloop()
 
 class RegWindow():
 
-    def __init__(self, root, title, size):
+    def __init__(self, root, title, size, IP):
+        self.ip = IP
         self.root = root
         self.title = title
         self.size = size
@@ -141,7 +178,6 @@ class RegWindow():
         self.regButton = Button(self.frame,text = "Register",font=("yu gothic ui", 18, "bold"),cursor = "hand2",command = self.register).place(x=530,y=470)
 
     def register(self):
-        # store self.name, self.hand, self.img in db
         loop = 1
         name = self.nameEntry.get()
         prefer = self.v.get()
@@ -173,20 +209,29 @@ class RegWindow():
                 os.remove("./{}.jpg".format(name))
 
     def screenshot(self):
-        name = self.nameEntry.get()
-        if name:
-            path = "./{}.jpg".format(name)
-            with mss() as sct:
-                filename = sct.shot(output=path)
-            messagebox.showinfo("Success", "Screenshot saved!")
-            self.click = 1
-        else:
-            messagebox.showwarning("Warning", "Username not entered!")
+        cap=cv2.VideoCapture(0)
+        while True:
+            ret,frame=cap.read()
+            cv2.putText(frame, 'Press escape button to capture your picture!',(5, 50),cv2.FONT_HERSHEY_SIMPLEX, 0.7,(255, 255, 0),2,cv2.LINE_AA)
+            cv2.imshow("Auth",frame)
+            key=cv2.waitKey(1)
+
+            if key==27:
+                cap.release()
+                cv2.destroyAllWindows()
+                name = self.nameEntry.get()
+                if name:
+                    path = "./{}.jpg".format(name)
+                    with mss() as sct:
+                        filename = sct.shot(output=path)
+                    messagebox.showinfo("Success", "Screenshot saved!")
+                    self.click = 1
+                else:
+                    messagebox.showwarning("Warning", "Username not entered!")
+                break
+
 
 if __name__ == "__main__":
-    #cap=cv2.VideoCapture(-1)
     mainWindow = Tk()
     mainFenster = MainWindow(mainWindow, "Face Recognition", "1166x718")
     mainWindow.mainloop()
-    #cap.release()
-    #cv2.destroyAllWindows()
