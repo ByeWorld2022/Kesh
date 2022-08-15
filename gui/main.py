@@ -1,9 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-<<<<<<< HEAD
 from simple_facerec import SimpleFacerec
-=======
->>>>>>> d188924607c97f67956a6006a796dd284e98247c
 from mss import mss
 import os
 import shutil
@@ -116,7 +113,7 @@ class LoginWindow():
                 y1,x1,y2,x2=loc[0],loc[1],loc[2],loc[3]
                 cv2.putText(frame,name,(x1,y1-10),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
                 cv2.rectangle(frame,(x1,y1),(x2,y2),(0,0,200),2)
-
+            cv2.putText(frame, 'Press escape button to release!',(5, 50),cv2.FONT_HERSHEY_SIMPLEX, 0.7,(255, 255, 0),2,cv2.LINE_AA)
             cv2.imshow("Auth",frame)
             key=cv2.waitKey(1)
 
@@ -220,16 +217,18 @@ class RegWindow():
             key=cv2.waitKey(1)
 
             if key==27:
-                cap.release()
-                cv2.destroyAllWindows()
                 name = self.nameEntry.get()
                 if name:
                     path = "./{}.jpg".format(name)
                     with mss() as sct:
                         filename = sct.shot(output=path)
+                    cap.release()
+                    cv2.destroyAllWindows()
                     messagebox.showinfo("Success", "Screenshot saved!")
                     self.click = 1
                 else:
+                    cap.release()
+                    cv2.destroyAllWindows()
                     messagebox.showwarning("Warning", "Username not entered!")
                 break
 
@@ -237,10 +236,4 @@ class RegWindow():
 if __name__ == "__main__":
     mainWindow = Tk()
     mainFenster = MainWindow(mainWindow, "Face Recognition", "1166x718")
-<<<<<<< HEAD
     mainWindow.mainloop()
-=======
-    mainWindow.mainloop()
-    #cap.release()
-    #cv2.destroyAllWindows()
->>>>>>> d188924607c97f67956a6006a796dd284e98247c
