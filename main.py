@@ -4,28 +4,38 @@ from tkinter.colorchooser import askcolor
 from tkinter import ttk
 import tkinter as tk
 from turtle import color
+import pyautogui
+import os
 
 root = Tk()
 root.title("White Board")
-root.geometry("1050x620+150+50")
+root.overrideredirect(True)
+root.geometry("80x410+150+50")
 root.configure(bg="#f2f3f5")
 root.resizable(False,False)
 #root.wm_attributes('-topmost', True)
 #root.wm_attributes('-transparentcolor','#add123')
 
 pen_on=False
+mag=False
 current_x = 0
 current_y = 0
 color = 'black'
 
-def switch_pen():
+def annotate():
     global pen_on
-    if pen_on==True:
-        pen_on=False
-        root.config(cursor="")
-    else:
-        pen_on=True
-        root.config(cursor="pencil")
+    if pen_on==False:
+
+        os.system("cmd /k screenpen")
+
+def magnify():
+    pass
+
+def zoomify():
+    pass
+
+def clearall():
+    root.destroy()
 
 def locate_xy(work):
     global current_x, current_y
@@ -33,41 +43,32 @@ def locate_xy(work):
     current_x = work.x
     current_y = work.y
 
-def addLine(work):
-    global current_x, current_y, pen_on
-    if pen_on:
-        var = canvas.create_line((current_x,current_y,work.x,work.y),width=get_current_value(),fill=color,capstyle=ROUND,smooth=TRUE)
-        current_x,current_y = work.x,work.y
 
 def show_color(new_color):
     global color
     color=new_color
 
-def new_canvas():
-    canvas.delete('all')
-    display_palette
 
 #icon
-image_icon=PhotoImage(file="./icons/paintbrush.png")
-root.iconphoto(False,image_icon)
 
-color_box=PhotoImage(file="./icons/color section.png")
-Label(root,image=color_box,bg="#f2f3f5").place(x=7,y=17)
 
-mag_icon=PhotoImage(file="./icons/mag.png")
-Button(root,image=mag_icon,bg="#f2f3f5").place(x=33,y=70)
 
-pen_icon=PhotoImage(file="./icons/pen1.png")
-Button(root,image=pen_icon,bg="#f2f3f5",command=switch_pen).place(x=33,y=110)
+mag_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/mag.png")
+Button(root,image=mag_icon,bg="#f2f3f5",command=magnify).place(x=20,y=40)
 
-eraser=PhotoImage(file="./icons/eraser.png")
-Button(root,image=eraser,bg="#f2f3f5",command=new_canvas).place(x=33,y=470)
+zoom_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/zoom.png")
+Button(root,image=zoom_icon,bg="#f2f3f5",command=zoomify).place(x=20,y=80)
 
-canvas= Canvas(root,width=930,height=540,background="white")
-canvas.place(x=100,y=10)
+pen_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/pen1.png")
+Button(root,image=pen_icon,bg="#f2f3f5",command=annotate).place(x=20,y=120)
 
-colors=Canvas(root,bg="#ffffff",width=37,height=310,bd=0)
-colors.place(x=30,y=150)
+destroy=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/destroy.png")
+Button(root,image=destroy,bg="#f2f3f5",command=clearall).place(x=20,y=360)
+
+
+
+colors=Canvas(root,bg="#ffffff",width=37,height=190,bd=0)
+colors.place(x=18,y=160)
 
 
 def display_palette():
@@ -77,34 +78,22 @@ def display_palette():
     id=colors.create_rectangle((10,40,30,60),fill="gray")
     colors.tag_bind(id,'<Button-1>',lambda x: show_color('gray'))
 
-    id=colors.create_rectangle((10,70,30,90),fill="brown")
-    colors.tag_bind(id,'<Button-1>',lambda x: show_color('brown'))
-
-    id=colors.create_rectangle((10,100,30,120),fill="pink")
-    colors.tag_bind(id,'<Button-1>',lambda x: show_color('pink'))
-
-    id=colors.create_rectangle((10,130,30,150),fill="red")
-    colors.tag_bind(id,'<Button-1>',lambda x: show_color('orange'))
-
-    id=colors.create_rectangle((10,160,30,180),fill="yellow")
+    id=colors.create_rectangle((10,70,30,90),fill="yellow")
     colors.tag_bind(id,'<Button-1>',lambda x: show_color('yellow'))
 
-    id=colors.create_rectangle((10,190,30,210),fill="green")
+    id=colors.create_rectangle((10,100,30,120),fill="green")
     colors.tag_bind(id,'<Button-1>',lambda x: show_color('green'))
 
-    id=colors.create_rectangle((10,220,30,240),fill="blue")
+    id=colors.create_rectangle((10,130,30,150),fill="blue")
     colors.tag_bind(id,'<Button-1>',lambda x: show_color('blue'))
 
-    id=colors.create_rectangle((10,250,30,270),fill="red")
+    id=colors.create_rectangle((10,160,30,180),fill="red")
     colors.tag_bind(id,'<Button-1>',lambda x: show_color('red'))
 
-    id=colors.create_rectangle((10,280,30,300),fill="white")
-    colors.tag_bind(id,'<Button-1>',lambda x: show_color('white'))
     
 display_palette()
 
-canvas.bind('<Button-1>',locate_xy)
-canvas.bind('<B1-Motion>',addLine)
+
 
 
 #slider
