@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-from unicodedata import name
 from mss import mss
 import os
 import shutil
