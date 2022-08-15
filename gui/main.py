@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
+<<<<<<< HEAD
 from simple_facerec import SimpleFacerec
+=======
+>>>>>>> d188924607c97f67956a6006a796dd284e98247c
 from mss import mss
 import os
 import shutil
@@ -234,4 +237,10 @@ class RegWindow():
 if __name__ == "__main__":
     mainWindow = Tk()
     mainFenster = MainWindow(mainWindow, "Face Recognition", "1166x718")
+<<<<<<< HEAD
     mainWindow.mainloop()
+=======
+    mainWindow.mainloop()
+    #cap.release()
+    #cv2.destroyAllWindows()
+>>>>>>> d188924607c97f67956a6006a796dd284e98247c
