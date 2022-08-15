@@ -185,7 +185,6 @@ class RegWindow():
         loginWindow.mainloop()
 
     def register(self):
-        loop = 1
         name = self.nameEntry.get()
         prefer = self.v.get()
         if not name:
@@ -195,23 +194,16 @@ class RegWindow():
         elif not self.click:
             messagebox.showerror("Error", "Screenshot not taken!")
         else:
-            src = "./Admin/{}.jpg".format(name)
-            dest = "./{}.jpg".format(name)
+            src = "./{}.jpg".format(name)
+            dest = "./Admin/{}.jpg".format(name)
             shutil.move(src, dest)
-
             messagebox.showinfo("Success", "Registered successfully!")
-            self.root.destroy() 
-            mainWindow = Tk()
-            mainFenster = MainWindow(mainWindow, "Face Recognition", "1166x718")
-            mainWindow.mainloop()
-            loop = 0
-        # If it's not in mainloop
-        if loop:
-            self.nameEntry.delete(0,END)
-            self.v.set(None)
-            self.click = 0
-            if os.path.exists("./{}.jpg".format(name)):
-                os.remove("./{}.jpg".format(name))
+            
+        self.nameEntry.delete(0,END)
+        self.v.set(None)
+        self.click = 0
+        if os.path.exists("./{}.jpg".format(name)):
+            os.remove("./{}.jpg".format(name))
 
     def screenshot(self):
         cap=cv2.VideoCapture(0)
@@ -226,7 +218,7 @@ class RegWindow():
             if key==27:
                 name = self.nameEntry.get()
                 if name:
-                    path = "./Admin/{}.jpg".format(name)
+                    path = "./{}.jpg".format(name)
                     with mss() as sct:
                         filename = sct.shot(output=path)
                     cap.release()
