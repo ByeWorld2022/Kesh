@@ -39,13 +39,12 @@ class MainWindow():
         self.root.title(self.title)
         self.root.geometry(self.size)
         self.root.resizable(False,False)
-
-        self.bg = PhotoImage(file="./images/b1.png")
+        self.bg = PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/images/b1.png")
         Label(self.root,image=self.bg).pack(fill="both",expand="yes")
 
         self.frame = Frame(self.root,bg="misty rose",width='950',height=570).place(x=100,y=70)
 
-        self.side_img2 = PhotoImage(file="./images/ip.png")
+        self.side_img2 = PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/images/ip.png")
         Label(self.frame,image=self.side_img2,bg="misty rose").place(x=450,y=100)
 
         self.ip = Label(self.frame,text="IP Address :",bg="misty rose",font=("yu gothic ui", 18, "bold")).place(x=350,y=400)
@@ -86,12 +85,12 @@ class LoginWindow():
         self.root.geometry(self.size)
         self.root.resizable(False,False)
 
-        self.bg = PhotoImage(file="./images/b1.png")
+        self.bg = PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/images/b1.png")
         Label(self.root,image=self.bg).pack(fill="both",expand="yes")
 
         self.frame = Frame(self.root,bg="PeachPuff3",width='950',height=570).place(x=100,y=70)
 
-        self.user = PhotoImage(file="./images/user.png")
+        self.user = PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/images/user.png")
         Label(self.frame,image=self.user,bg="PeachPuff3").place(x=430,y=130)
 
         self.loginButton = Button(self.frame,text = "Login",font=("yu gothic ui", 25, "bold"),cursor = "hand2",command = self.login).place(x=420,y=480)
@@ -103,7 +102,7 @@ class LoginWindow():
         cap=cv2.VideoCapture(0)
         #take all pics from admins
         sfr=SimpleFacerec()
-        sfr.load_encoding_images("./Admin")
+        sfr.load_encoding_images("C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/Admin")
 
         while True:
             ret,frame = cap.read()
@@ -152,7 +151,7 @@ class RegWindow():
         self.root.geometry(self.size)
         self.root.resizable(False,False)
 
-        self.bg = PhotoImage(file="./images/b1.png")
+        self.bg = PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/images/b1.png")
         Label(self.root,image=self.bg).pack(fill="both",expand="yes")
 
         self.frame = Frame(self.root,bg="PeachPuff3",width='950',height=570).place(x=100,y=70)
@@ -195,8 +194,8 @@ class RegWindow():
         elif not self.click:
             messagebox.showerror("Error", "Screenshot not taken!")
         else:
-            src = "./{}.jpg".format(name)
-            dest = "./Admin/{}.jpg".format(name)
+            src = "C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/{}.jpg".format(name)
+            dest = "C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/Admin/{}.jpg".format(name)
             shutil.move(src, dest)
             messagebox.showinfo("Success", "Registered successfully!")
             
@@ -210,8 +209,8 @@ class RegWindow():
         self.nameEntry.delete(0,END)
         self.v.set(None)
         self.click = 0
-        if os.path.exists("./{}.jpg".format(name)):
-            os.remove("./{}.jpg".format(name))
+        if os.path.exists("C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/{}.jpg".format(name)):
+            os.remove("C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/{}.jpg".format(name))
 
     def screenshot(self):
         cap=cv2.VideoCapture(0)
@@ -226,7 +225,7 @@ class RegWindow():
             if key==27:
                 name = self.nameEntry.get()
                 if name:
-                    path = "./{}.jpg".format(name)
+                    path = "C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh/gui/{}.jpg".format(name)
                     with mss() as sct:
                         filename = sct.shot(output=path)
                     cap.release()

@@ -10,7 +10,7 @@ import os
 root = Tk()
 root.title("White Board")
 root.overrideredirect(True)
-root.geometry("80x410+150+50")
+root.geometry("80x430+150+50")
 root.configure(bg="#f2f3f5")
 root.resizable(False,False)
 #root.wm_attributes('-topmost', True)
@@ -34,6 +34,10 @@ def magnify():
 def zoomify():
     pass
 
+def voice():
+    pass
+
+
 def clearall():
     root.destroy()
 
@@ -53,17 +57,20 @@ def show_color(new_color):
 
 
 
-mag_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/mag.png")
-Button(root,image=mag_icon,bg="#f2f3f5",command=magnify).place(x=20,y=40)
+mag_icon=PhotoImage(file="./icons/mag.png")
+Button(root,image=mag_icon,bg="#f2f3f5",command=magnify).place(x=20,y=50)
 
-zoom_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/zoom.png")
-Button(root,image=zoom_icon,bg="#f2f3f5",command=zoomify).place(x=20,y=80)
+zoom_icon=PhotoImage(file="./icons/zoom.png")
+Button(root,image=zoom_icon,bg="#f2f3f5",command=zoomify).place(x=20,y=90)
 
-pen_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/pen1.png")
-Button(root,image=pen_icon,bg="#f2f3f5",command=annotate).place(x=20,y=120)
+pen_icon=PhotoImage(file="./icons/pen1.png")
+Button(root,image=pen_icon,bg="#f2f3f5",command=annotate).place(x=20,y=130)
 
-destroy=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/destroy.png")
-Button(root,image=destroy,bg="#f2f3f5",command=clearall).place(x=20,y=360)
+destroy=PhotoImage(file="./icons/destroy.png")
+Button(root,image=destroy,bg="#f2f3f5",command=clearall).place(x=20,y=370)
+
+voice_icon=PhotoImage(file="./icons/voice.png")
+Button(root,image=voice_icon,bg="#f2f3f5",command=annotate).place(x=20,y=10)
 
 
 
