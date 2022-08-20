@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from simple_facerec import SimpleFacerec
+from csv import writer
 from mss import mss
 import os
 import shutil
@@ -199,6 +200,13 @@ class RegWindow():
             shutil.move(src, dest)
             messagebox.showinfo("Success", "Registered successfully!")
             
+            # write a text file to save data - name & preference
+            List = [name,prefer]
+            with open('info.csv', 'a') as f_object:
+                writer_object = writer(f_object)
+                writer_object.writerow(List)
+                f_object.close()
+      
         self.nameEntry.delete(0,END)
         self.v.set(None)
         self.click = 0
