@@ -1,5 +1,5 @@
-from tkinter import ttk
-import tkinter as tk
+from tkinter import Tk,ttk,PhotoImage,Button,Canvas,DoubleVar
+#import tkinter as tk
 from turtle import color
 import pyautogui
 
@@ -44,16 +44,16 @@ def show_color(new_color):
     global color
     color=new_color
 
-mag_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/mag.png")
+mag_icon=PhotoImage(file="./icons/mag.png")
 Button(root,image=mag_icon,bg="#f2f3f5",command=magnify).place(x=20,y=40)
 
-zoom_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/zoom.png")
+zoom_icon=PhotoImage(file="./icons/zoom.png")
 Button(root,image=zoom_icon,bg="#f2f3f5",command=zoomify).place(x=20,y=80)
 
-pen_icon=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/pen1.png")
+pen_icon=PhotoImage(file="./icons/pen1.png")
 Button(root,image=pen_icon,bg="#f2f3f5",command=switch_pen).place(x=20,y=120)
 
-destroy=PhotoImage(file="C:/Users/theja/OneDrive/Desktop/Desktop/SIH2/Kesh//icons/destroy.png")
+destroy=PhotoImage(file="./icons/destroy.png")
 Button(root,image=destroy,bg="#f2f3f5",command=clearall).place(x=20,y=360)
 
 colors=Canvas(root,bg="#ffffff",width=37,height=190,bd=0)
@@ -82,7 +82,7 @@ def display_palette():
 display_palette()
 
 #slider
-current_value=tk.DoubleVar()
+current_value=DoubleVar()
 def get_current_value():
     return '{: .2f}'.format(current_value.get())
 def slider_changed(event):
